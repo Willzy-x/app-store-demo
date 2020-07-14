@@ -27,6 +27,10 @@ public class AppSlideAdapter extends RecyclerView.Adapter<AppSlideAdapter.ViewHo
         this.appSlideList.add(new AppSlide("Nice", FakeAppDataFactory.getFakeAppData_2()));
         this.appSlideList.add(new AppSlide("Fun", FakeAppDataFactory.getFakeAppData_1()));
         this.appSlideList.add(new AppSlide("Nice", FakeAppDataFactory.getFakeAppData_2()));
+        this.appSlideList.add(new AppSlide("Good", FakeAppDataFactory.getFakeAppData_1()));
+        this.appSlideList.add(new AppSlide("Cool", FakeAppDataFactory.getFakeAppData_2()));
+        this.appSlideList.add(new AppSlide("Good", FakeAppDataFactory.getFakeAppData_1()));
+        this.appSlideList.add(new AppSlide("Cool", FakeAppDataFactory.getFakeAppData_2()));
     }
 
     public void setAppSlideList(List<AppSlide> appSlideList) {

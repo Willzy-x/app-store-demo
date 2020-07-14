@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appstore.AppContentActivity;
 import com.example.appstore.R;
 import com.example.appstore.model.App;
 
@@ -31,8 +32,9 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder>  {
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
                 App app = appList.get(position);
-                Toast.makeText(view.getContext(), "you clicked view " + app.getAppTitle(),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(view.getContext(), "you clicked view " + app.getAppTitle(),
+//                        Toast.LENGTH_SHORT).show();
+                AppContentActivity.actionStart(view.getContext(), app.getImageId(), app.getAppTitle(), app.getAppSize());
             }
         });
 
