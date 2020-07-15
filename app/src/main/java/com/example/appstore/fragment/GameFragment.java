@@ -31,7 +31,6 @@ public class GameFragment extends Fragment {
         this.mTabCategory.setTabMode(TabLayout.MODE_SCROLLABLE);
         ViewCompat.setElevation(this.mTabCategory, 10);
         this.mTabCategory.setupWithViewPager(this.mContentVp);
-
     }
 
     @Nullable

@@ -46,23 +46,6 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder>  {
             }
         });
 
-        // 设置点击效果
-        holder.appView.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        view.setBackgroundColor(0x11000000);
-                        return false;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        view.setBackgroundColor(0xffffffff);
-                        break;
-                }
-                return view.onTouchEvent(motionEvent);
-            }
-        });
         return holder;
     }
 

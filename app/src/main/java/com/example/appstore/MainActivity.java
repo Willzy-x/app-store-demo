@@ -34,13 +34,23 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
-    public static final IFakeAppDataFactory FAKE_APP_DATA_FACTORY = new FakeAppDataFactorySet1();
-    public static final IFakeTabFragmentFactory FAKE_TAB_FRAGMENT_FACTORY = new IFakeTabFragmentFactoryImpl();
+
+
+    public static IFakeAppDataFactory FAKE_APP_DATA_FACTORY;
+    public static IFakeTabFragmentFactory FAKE_TAB_FRAGMENT_FACTORY;
+
+    static {
+        FAKE_APP_DATA_FACTORY = new FakeAppDataFactorySet1();
+        FAKE_TAB_FRAGMENT_FACTORY = new IFakeTabFragmentFactoryImpl();
+    }
 
     private DrawerLayout mDrawerLayout;
 
     private AppTitleFragment anotherFragment;
     private GameFragment gameFragment;
+
+    private FragmentManager mFragmentManager;
+//    private Fragment preFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         this.anotherFragment = new AppTitleFragment();
         this.gameFragment = new GameFragment();
+
+        this.mFragmentManager = getSupportFragmentManager();
 
         // Navigation init
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -91,17 +103,24 @@ public class MainActivity extends AppCompatActivity {
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                FragmentTransaction transaction = MainActivity.this.mFragmentManager.beginTransaction();
                 switch (menuItem.getItemId()) {
                     case R.id.menu_game:
-                        replaceFragment(MainActivity.this.gameFragment);
+                        transaction.hide(MainActivity.this.anotherFragment);
+                        transaction.show(MainActivity.this.gameFragment);
                         break;
 
                     case R.id.menu_application:
-                        replaceFragment(MainActivity.this.anotherFragment);
+                        transaction.hide(MainActivity.this.gameFragment);
+                        if (!MainActivity.this.mFragmentManager.getFragments().contains(MainActivity.this.anotherFragment)) {
+                            transaction.add(R.id.overall_layout, MainActivity.this.anotherFragment);
+                        }
+                        transaction.show(MainActivity.this.anotherFragment);
                         break;
 
                     default:
                 }
+                transaction.commit();
                 return true;
             }
         });

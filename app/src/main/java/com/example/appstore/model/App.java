@@ -1,10 +1,12 @@
 package com.example.appstore.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
-public class App implements Cloneable, Serializable {
+public class App implements Cloneable, Parcelable {
     private String appTitle;
     private int imageId;
     private int appSize;
@@ -14,6 +16,24 @@ public class App implements Cloneable, Serializable {
         this.imageId = imageId;
         this.appSize = appSize;
     }
+
+    public App(Parcel in) {
+        this.appTitle = in.readString();
+        this.imageId = in.readInt();
+        this.appSize = in.readInt();
+    }
+
+    public static final Creator<App> CREATOR = new Creator<App>() {
+        @Override
+        public App createFromParcel(Parcel in) {
+            return new App(in);
+        }
+
+        @Override
+        public App[] newArray(int size) {
+            return new App[size];
+        }
+    };
 
     @NonNull
     @Override
@@ -43,5 +63,17 @@ public class App implements Cloneable, Serializable {
 
     public void setAppSize(int appSize) {
         this.appSize = appSize;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(this.appTitle);
+        parcel.writeInt(this.imageId);
+        parcel.writeInt(this.appSize);
     }
 }

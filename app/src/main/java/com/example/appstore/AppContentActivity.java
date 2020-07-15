@@ -21,7 +21,7 @@ public class AppContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_content);
 
-        App app = (App) getIntent().getSerializableExtra("app_data");
+        App app = (App) getIntent().getParcelableExtra("app_data");
 
         AppContentFragment appContentFragment = (AppContentFragment)
                 getSupportFragmentManager().findFragmentById(R.id.app_content_fragment);
