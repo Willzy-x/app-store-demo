@@ -1,5 +1,6 @@
 package com.example.appstore.adapter;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appstore.AppContentActivity;
+import com.example.appstore.MainActivity;
 import com.example.appstore.R;
 import com.example.appstore.model.App;
 
@@ -19,6 +21,14 @@ import java.util.List;
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder>  {
 
     private List<App> appList;
+
+    public AppAdapter() {
+        this.appList = MainActivity.FAKE_APP_DATA_FACTORY.getFakeAppDataList();
+    }
+
+    public AppAdapter(List<App> appList) {
+        this.appList = appList;
+    }
 
     @NonNull
     @Override
@@ -32,14 +42,13 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder>  {
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
                 App app = appList.get(position);
-//                Toast.makeText(view.getContext(), "you clicked view " + app.getAppTitle(),
-//                        Toast.LENGTH_SHORT).show();
-                AppContentActivity.actionStart(view.getContext(), app.getImageId(), app.getAppTitle(), app.getAppSize());
+                AppContentActivity.actionStart(view.getContext(), app);
             }
         });
 
         // 设置点击效果
         holder.appView.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
@@ -57,6 +66,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder>  {
         return holder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         App app = appList.get(i);
@@ -85,10 +95,5 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder>  {
             this.appSize = itemView.findViewById(R.id.app_size);
         }
     }
-
-    public AppAdapter(List<App> appList) {
-        this.appList = appList;
-    }
-
 
 }

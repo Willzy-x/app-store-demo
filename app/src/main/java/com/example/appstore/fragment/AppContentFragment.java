@@ -1,5 +1,6 @@
 package com.example.appstore.fragment;
 
+import android.annotation.SuppressLint;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.appstore.R;
+import com.example.appstore.model.App;
 
 public class AppContentFragment extends Fragment {
 
@@ -24,13 +26,14 @@ public class AppContentFragment extends Fragment {
         return this.view;
     }
 
-    public void refresh(int appImage, String appTitle, int appSize) {
+    @SuppressLint("SetTextI18n")
+    public void refresh(App app) {
         ImageView appImageView = this.view.findViewById(R.id.app_image);
         TextView appTitleView = this.view.findViewById(R.id.app_title);
         TextView appSizeView = this.view.findViewById(R.id.app_size);
 
-        appImageView.setImageResource(appImage);
-        appTitleView.setText(appTitle);
-        appSizeView.setText(String.valueOf((double) appSize / 100.0) + " MB");
+        appImageView.setImageResource(app.getImageId());
+        appTitleView.setText(app.getAppTitle());
+        appSizeView.setText(String.valueOf((double) app.getAppSize() / 100.0) + " MB");
     }
 }

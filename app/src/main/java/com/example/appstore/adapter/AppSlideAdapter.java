@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.appstore.MainActivity;
 import com.example.appstore.R;
-import com.example.appstore.factory.FakeAppDataFactory;
 import com.example.appstore.model.AppSlide;
 
 import java.util.ArrayList;
@@ -23,14 +23,9 @@ public class AppSlideAdapter extends RecyclerView.Adapter<AppSlideAdapter.ViewHo
 
     public AppSlideAdapter() {
         this.appSlideList = new ArrayList<>();
-        this.appSlideList.add(new AppSlide("Fun", FakeAppDataFactory.getFakeAppData_1()));
-        this.appSlideList.add(new AppSlide("Nice", FakeAppDataFactory.getFakeAppData_2()));
-        this.appSlideList.add(new AppSlide("Fun", FakeAppDataFactory.getFakeAppData_1()));
-        this.appSlideList.add(new AppSlide("Nice", FakeAppDataFactory.getFakeAppData_2()));
-        this.appSlideList.add(new AppSlide("Good", FakeAppDataFactory.getFakeAppData_1()));
-        this.appSlideList.add(new AppSlide("Cool", FakeAppDataFactory.getFakeAppData_2()));
-        this.appSlideList.add(new AppSlide("Good", FakeAppDataFactory.getFakeAppData_1()));
-        this.appSlideList.add(new AppSlide("Cool", FakeAppDataFactory.getFakeAppData_2()));
+        for (int i = 0; i < 6; i++) {
+            this.appSlideList.add(MainActivity.FAKE_APP_DATA_FACTORY.getClonedSingleFakeAppSlide());
+        }
     }
 
     public void setAppSlideList(List<AppSlide> appSlideList) {
@@ -56,8 +51,7 @@ public class AppSlideAdapter extends RecyclerView.Adapter<AppSlideAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(
                 R.layout.app_item_frag, viewGroup, false);
-        final ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override

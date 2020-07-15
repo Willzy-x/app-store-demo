@@ -14,24 +14,10 @@ import android.widget.TextView;
 
 import com.example.appstore.R;
 import com.example.appstore.adapter.AppAdapter;
-import com.example.appstore.factory.FakeAppDataFactory;
-import com.example.appstore.model.App;
-
-import java.util.List;
 
 public class AppTitleFragment extends Fragment {
 
     private static final String TAG = "AppTitleFragment";
-
-    private List<App> appList = FakeAppDataFactory.getFakeAppData_1();
-
-    public List<App> getAppList() {
-        return appList;
-    }
-
-    public void setAppList(List<App> appList) {
-        this.appList = appList;
-    }
 
     @Nullable
     @Override
@@ -45,9 +31,8 @@ public class AppTitleFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        AppAdapter appAdapter = new AppAdapter(this.appList);
+        AppAdapter appAdapter = new AppAdapter();
         slideIntroView.setText(R.string.words1);
-        Log.d(TAG, "onCreateView: " + this.appList.getClass().getSimpleName());
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(appAdapter);

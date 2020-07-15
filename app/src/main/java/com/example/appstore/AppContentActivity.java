@@ -6,15 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.appstore.fragment.AppContentFragment;
+import com.example.appstore.model.App;
 
 public class AppContentActivity extends AppCompatActivity {
 
-    public static void actionStart(Context context,
-                                   int appImage, String appTitle, int appSize) {
+    public static void actionStart(Context context, App app) {
         Intent intent = new Intent(context, AppContentActivity.class);
-        intent.putExtra("app_image", appImage);
-        intent.putExtra("app_title", appTitle);
-        intent.putExtra("app_size", appSize);
+        intent.putExtra("app_data", app);
         context.startActivity(intent);
     }
 
@@ -23,13 +21,13 @@ public class AppContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_content);
 
-        int appImage = getIntent().getIntExtra("app_image", R.drawable.ak);
-        String appTitle = getIntent().getStringExtra("app_title");
-        int appSize = getIntent().getIntExtra("app_size",100);
+        App app = (App) getIntent().getSerializableExtra("app_data");
 
         AppContentFragment appContentFragment = (AppContentFragment)
                 getSupportFragmentManager().findFragmentById(R.id.app_content_fragment);
         assert appContentFragment != null;
-        appContentFragment.refresh(appImage, appTitle, appSize);
+        if (app != null) {
+            appContentFragment.refresh(app);
+        }
     }
 }

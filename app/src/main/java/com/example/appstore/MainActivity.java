@@ -20,6 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.appstore.adapter.ContentPagerAdapter;
+import com.example.appstore.factory.FakeAppDataFactorySet1;
+import com.example.appstore.factory.IFakeAppDataFactory;
+import com.example.appstore.factory.IFakeTabFragmentFactory;
+import com.example.appstore.factory.IFakeTabFragmentFactoryImpl;
 import com.example.appstore.fragment.AppSlideFragment;
 import com.example.appstore.fragment.AppTitleFragment;
 import com.example.appstore.fragment.GameFragment;
@@ -30,44 +34,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
+    public static final IFakeAppDataFactory FAKE_APP_DATA_FACTORY = new FakeAppDataFactorySet1();
+    public static final IFakeTabFragmentFactory FAKE_TAB_FRAGMENT_FACTORY = new IFakeTabFragmentFactoryImpl();
 
     private DrawerLayout mDrawerLayout;
-    private TabLayout mTabCategory;
-    private ViewPager mContentVp;
-    private ContentPagerAdapter categoryContentAdapter;
-
-    private List<String> tabCategoryTitles;
-    private List<Fragment> tabCategoryFragments;
 
     private AppTitleFragment anotherFragment;
     private GameFragment gameFragment;
-
-
-//    private void initCategoryTab() {
-//        this.mTabCategory.setTabMode(TabLayout.MODE_SCROLLABLE);
-//        ViewCompat.setElevation(this.mTabCategory, 10);
-//        this.mTabCategory.setupWithViewPager(this.mContentVp);
-//
-//    }
-//
-//    private void initCategoryTabContents() {
-//        this.tabCategoryTitles = new ArrayList<>();
-//        this.tabCategoryTitles.add("Recommendation");
-//        this.tabCategoryTitles.add("Ranking");
-//        this.tabCategoryTitles.add("Paid");
-//        this.tabCategoryTitles.add("Arcade");
-//        this.tabCategoryTitles.add("Today");
-//        this.tabCategoryTitles.add("More");
-//
-//        this.tabCategoryFragments = new ArrayList<>();
-//        for (String s : this.tabCategoryTitles) {
-//            this.tabCategoryFragments.add(new AppSlideFragment());
-//        }
-//
-//        this.categoryContentAdapter = new ContentPagerAdapter(
-//                getSupportFragmentManager(), this.tabCategoryTitles, this.tabCategoryFragments);
-//        this.mContentVp.setAdapter(this.categoryContentAdapter);
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +48,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        this.mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        this.anotherFragment = new AppTitleFragment();
+        this.gameFragment = new GameFragment();
 
         // Navigation init
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setCheckedItem(R.id.nav_user);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
@@ -107,18 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        this.mTabCategory = findViewById(R.id.tab_category);
-//
-//        this.mContentVp = findViewById(R.id.vp_content);
-
-//        initCategoryTab();
-//        initCategoryTabContents();
-
-        this.anotherFragment = new AppTitleFragment();
-        this.gameFragment = new GameFragment();
-
-        replaceFragment(this.gameFragment);
-
+        // init bottom navigation view
         BottomNavigationView bottomTab = (BottomNavigationView) findViewById(R.id.bottom_tab);
         bottomTab.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -138,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        replaceFragment(this.gameFragment);
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -145,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.overall_layout, fragment);
         transaction.addToBackStack(null);
-//        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.commit();
     }
 
@@ -160,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // 打开抽屉导航栏
             case R.id.nav_list:
-                Toast.makeText(this, "You clicked Nav", Toast.LENGTH_SHORT).show();
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
 
@@ -172,28 +139,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
-//    class ContentPagerAdapter extends FragmentPagerAdapter {
-//
-//        public ContentPagerAdapter(FragmentManager fm) {
-//            super(fm);
-//        }
-//
-//        @Override
-//        public Fragment getItem(int i) {
-//            return tabCategoryFragments.get(i);
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return tabCategoryTitles.size();
-//        }
-//
-//        @Nullable
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            return tabCategoryTitles.get(position);
-//        }
-//    }
 
 }

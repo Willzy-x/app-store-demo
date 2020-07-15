@@ -15,7 +15,6 @@ import com.example.appstore.MainActivity;
 import com.example.appstore.R;
 import com.example.appstore.adapter.ContentPagerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameFragment extends Fragment {
@@ -25,37 +24,14 @@ public class GameFragment extends Fragment {
     private TabLayout mTabCategory;
     private ViewPager mContentVp;
 
-
-    private List<String> tabCategoryTitles;
-    private List<Fragment> tabCategoryFragments;
-
-    private ContentPagerAdapter categoryContentAdapter;
-
+    private List<String> tabCategoryTitles = MainActivity.FAKE_TAB_FRAGMENT_FACTORY.getTabTitle();
+    private List<Fragment> tabCategoryFragments = MainActivity.FAKE_TAB_FRAGMENT_FACTORY.getTabFragmentList();
 
     private void initCategoryTab() {
         this.mTabCategory.setTabMode(TabLayout.MODE_SCROLLABLE);
         ViewCompat.setElevation(this.mTabCategory, 10);
         this.mTabCategory.setupWithViewPager(this.mContentVp);
 
-    }
-
-    private void initCategoryTabContents() {
-        this.tabCategoryTitles = new ArrayList<>();
-        this.tabCategoryTitles.add("Recommendation");
-        this.tabCategoryTitles.add("Ranking");
-        this.tabCategoryTitles.add("Paid");
-        this.tabCategoryTitles.add("Arcade");
-        this.tabCategoryTitles.add("Today");
-        this.tabCategoryTitles.add("More");
-
-        this.tabCategoryFragments = new ArrayList<>();
-        for (String s : this.tabCategoryTitles) {
-            this.tabCategoryFragments.add(new AppSlideFragment());
-        }
-
-        this.categoryContentAdapter = new ContentPagerAdapter(
-                getActivity().getSupportFragmentManager(), this.tabCategoryTitles, this.tabCategoryFragments);
-        this.mContentVp.setAdapter(this.categoryContentAdapter);
     }
 
     @Nullable
@@ -70,7 +46,10 @@ public class GameFragment extends Fragment {
         this.mContentVp = this.view.findViewById(R.id.vp_content);
 
         initCategoryTab();
-        initCategoryTabContents();
+
+        ContentPagerAdapter categoryContentAdapter = new ContentPagerAdapter(
+                getActivity().getSupportFragmentManager(), this.tabCategoryTitles, this.tabCategoryFragments);
+        this.mContentVp.setAdapter(categoryContentAdapter);
 
         return view;
     }

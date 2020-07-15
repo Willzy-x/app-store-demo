@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContentPagerAdapter extends FragmentPagerAdapter {
@@ -48,6 +47,5 @@ public class ContentPagerAdapter extends FragmentPagerAdapter {
         else
             return this.titleList.get(position);
     }
-
 
 }

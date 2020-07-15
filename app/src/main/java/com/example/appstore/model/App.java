@@ -1,6 +1,10 @@
 package com.example.appstore.model;
 
-public class App {
+import android.support.annotation.NonNull;
+
+import java.io.Serializable;
+
+public class App implements Cloneable, Serializable {
     private String appTitle;
     private int imageId;
     private int appSize;
@@ -9,6 +13,12 @@ public class App {
         this.appTitle = appTitle;
         this.imageId = imageId;
         this.appSize = appSize;
+    }
+
+    @NonNull
+    @Override
+    public App clone() throws CloneNotSupportedException {
+            return (App) super.clone();
     }
 
     public String getAppTitle() {

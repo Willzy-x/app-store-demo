@@ -1,14 +1,22 @@
 package com.example.appstore.model;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
-public class AppSlide {
+public class AppSlide implements Cloneable {
     private String slideTitle;
     private List<App> appSlide;
 
     public AppSlide(String slideTitle, List<App> appSlide) {
         this.slideTitle = slideTitle;
         this.appSlide = appSlide;
+    }
+
+    @NonNull
+    @Override
+    public AppSlide clone() throws CloneNotSupportedException {
+        return (AppSlide) super.clone();
     }
 
     public String getSlideTitle() {
